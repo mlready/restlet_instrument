@@ -1,0 +1,41 @@
+<scxml initial="initial" version="0.9" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0.0 y=0.0 w=480.0 h=750.0  -->
+ <state id="initial"><!--   node-size-and-position x=167.0 y=43.0 w=50.0 h=20.0  -->
+   <transition event="runCommand" target="Running"></transition> 
+ </state>
+ <state id="RunConfigured"><!--   node-size-and-position x=90.0 y=250.0 w=90.0 h=20.0  -->
+  <transition event="sampleInput" target="ReadyToRun"></transition>
+ </state>
+ <state id="Running"><!--   node-size-and-position x=110.0 y=400.0 w=50.0 h=20.0  -->
+  <transition event="runAborted" target="Aborted"></transition>
+  <transition event="ICRunCompleted" target="ICRunComplete"></transition>
+ </state>
+ <state id="initialError"><!--   node-size-and-position x=300.0 y=50.0 w=90.0 h=20.0  -->
+  <transition event="reset" target="initial"><!--   edge-path [initial]  x=250.0 y=60.0  --></transition>
+ </state>
+ <state id="RunComplete"><!--   node-size-and-position x=100.0 y=550.0 w=80.0 h=20.0  -->
+  <transition event="sampleRemoved" target="ICAvailable"><!--   edge-path [ICAvailable]  x=40.0 y=560.0 x=30.0 y=120.0  --></transition>
+ </state>
+ <state id="Aborted"><!--   node-size-and-position x=380.0 y=400.0 w=50.0 h=20.0  -->
+  <transition event="sampleRemoved" target="ICAvailable"><!--   edge-path [ICAvailable]  x=410.0 y=130.0  --></transition>
+ </state>
+ <state id="Available"><!--   node-size-and-position x=100.0 y=160.0 w=90.0 h=30.0  -->
+  <transition event="runConfiguration" target="ICConfigured"></transition>
+ </state>
+ <state id="ICAvailable"><!--   node-size-and-position x=200.0 y=110.0 w=70.0 h=20.0  -->
+  <onexit>leaving ICAvailable</onexit>
+  <transition event="DMAvailable" target="Available"></transition>
+ </state>
+ <state id="ReadyToRun"><!--   node-size-and-position x=100.0 y=320.0 w=70.0 h=20.0  -->
+  <transition event="runCommand" target="Running"></transition>
+  <transition event="sensorOutOfRange" target="SensorOutOfRange"></transition>
+ </state>
+ <state id="ICConfigured"><!--   node-size-and-position x=260.0 y=190.0 w=100.0 h=50.0  -->
+  <transition event="DMConfigured" target="RunConfigured"></transition>
+ </state>
+ <state id="ICRunComplete"><!--   node-size-and-position x=230.0 y=450.0 w=100.0 h=40.0  -->
+  <transition event="DMRunCompleted" target="RunComplete"></transition>
+ </state>
+ <state id="SensorOutOfRange"><!--   node-size-and-position x=290.0 y=290.0 w=100.0 h=40.0  -->
+  <transition event="sensorsInfRange" target="ReadyToRun"><!--   edge-path [ReadyToRun]  x=270.0 y=340.0  --></transition>
+ </state>
+</scxml>

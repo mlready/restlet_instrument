@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restlet Instrument System</title>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+ 
+function loadPage(url)  //the function that loads pages via AJAX
+{
+   jQuery.support.cors = true;   
+   $.ajax({    //create an ajax request 
+        type: 'GET',
+        url: url + "?id=" + makeid(),
+		dataType : "text",
+		accepts: "text/html",
+        success: function(msg){
+		    $("#queryResponse").html(msg);           
+        },
+		error:function (xhr, ajaxOptions, thrownError){
+		    alert(xhr.status); 
+		    alert(thrownError);
+		}  
+    });
+
+}
+function makeid() {
+     var text = "";
+     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	 for( var i=0; i < 5; i++ ) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	 } 
+	 return text;
+}
+function clearResponse() {
+     document.getElementById("queryResponse").innerHTML = "";
+}
+
+</script>
+</head>
+<body>
+<h1>Restlet Instrument Control</h1>
+<p>Be sure to start the qpid server and the Restlet server before exeucting any of these functions!</p>
+<form action="http://localhost/acq/run/start" method="post">
+<fieldset>
+<legend>Turn on the Instrument</legend>
+<div>
+<input type="submit" value="Submit" />
+</div>
+</fieldset>
+</form>
+</br>
+<h2>Instrument Events</h2>
+</br>
+<form action="http://localhost/acq/set/state" method="post">
+<fieldset>
+<legend>Post Event</legend>
+<div>
+<label for="event">Event:</label><br>
+<input type="radio" name="event" value="runCommand" /> Run Command</br>
+<input type="radio" name="event" value="sampleInput" /> Input Sample</br>
+<input type="radio" name="event" value="runConfiguration" /> Run Configuration</br>
+<input type="radio" name="event" value="ICRunCompleted" /> IC Run Completed</br>
+<input type="radio" name="event" value="selfCheck" /> Self Check</br>
+<input type="radio" name="event" value="runAborted" /> Abort</br>
+<input type="radio" name="event" value="reset" /> Reset</br>
+<input type="radio" name="event" value="sampleRemoved" /> Sample Removed</br>
+<input type="radio" name="event" value="DMAvailable" /> DM Available</br>
+<input type="radio" name="event" value="sensorOutOfRange" /> Sensor Out Of Range</br>
+<input type="radio" name="event" value="DMConfigured" /> DM Configured</br>
+<input type="radio" name="event" value="DMRunCompleted" /> DM RunCompleted</br>
+<input type="radio" name="event" value="sensorsInRange" /> Sensors In Range</br>
+</div>
+<div>
+<input type="submit" value="Submit" />
+</div>
+</fieldset>
+</form>
+</br>
+<h2>Configuration Parameters</h2>
+<form action="http://localhost/acq/run/config" method="post">
+<fieldset>
+<legend>Make Changes to Configuration</legend>
+<div>
+<label for="config">Configuration:</label><br>
+<input type="radio" name="config" value="color" /> Color</br>
+<input type="radio" name="config" value="temperature" /> Temperature</br>
+</div>
+<div>
+<label for="state">Parameter Value:</label><br>
+<input type="text" name="param" value="" maxlength="100" /><br>
+</div>
+<div>
+<input type="submit" value="Submit" />
+</div>
+</fieldset>
+</form>
+</br>
+<h2>Instrument Queries</h2>
+<ul id="queries">
+<li><a href="#" onclick="loadPage('http://localhost/acq/get/state')" >Get Run State</a></li>
+<li><a href="#" onclick="loadPage('http://localhost/acq/run/info')" >Get Run Info</a></li>
+<li><a href="#" onclick="loadPage('http://localhost/acq/config')" >Get Configuration</a></li>
+</ul>
+<p>Response: <a href="#" onclick="clearResponse()">Clear</a>
+<div id="queryResponse"></div>
+</p>
+</body>
+</html>

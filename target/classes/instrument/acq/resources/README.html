@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>README</title>
+</head>
+<body>
+<h1>Instructions for Running RestletInstrument Examples</h1>
+<p>
+  The purpose of this exercise was to create an interactive environment using the Restlet REST API to interact with an instrument.</br>
+  Much of this code was based on, and expanded from code checked in John Krupka for his work using qpid and scxml</br></br>  
+  
+  The following technologies are used:
+  
+  <ul>
+    <li><a href="http://www.restlet.org/">Restlet</a></li>
+	<li><a href="http://qpid.apache.org/">Apache QPID</a></li>
+	<li><a href="http://commons.apache.org/scxml/">Apache SCXML</a></li>
+  </ul>
+  
+</p>
+<p>
+    Steps to run:
+	<ol>
+	   <li>Download QPID and install locally</li>
+	   <li>Start the QPID server from ${QPID_HOME}\bin</li>
+	   <li>Start TestServer in isfet.acq package by running as Java Application</li>
+	   <li>Open up restlet_instrument.html in a browser and starting clicking!</li>
+	</ol>
+	
+</p>
+<p>
+	Watch any logs for errors.  The QPID log is located in ${QPID_HOME}/work (but you must create this directory first!)</br>
+    Watch the console for error messages - you should see JMS messages being sent back and forth to the server.</br>	
+
+</p>
+
+<p>
+    The possible order for setting state events is based on the insDm.scxml file. When the instrument is in a certain state, only the events defined for that state can be executed.</br>
+    For example, when in the "Running" state, the only events that can be executed are "Run Aborted" or "ICRunCompleted". 
+    
+</p>
+
+</body>
+</html>
